@@ -10,6 +10,7 @@ import com.barrydempsey.rxandroidkotlinapp.Flight
 import com.barrydempsey.rxandroidkotlinapp.presenter.MainContract.View
 import com.barrydempsey.rxandroidkotlinapp.presenter.MainPresenter
 import com.barrydempsey.rxandroidkotlinapp.R.layout
+import kotlinx.android.synthetic.main.activity_main.progress_bar
 import kotlinx.android.synthetic.main.activity_main.recycler_view
 
 class MainActivity : AppCompatActivity(), View {
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), View {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_main)
+    progressBar = progress_bar
     presenter = MainPresenter.newInstance(this)
     presenter.getListOfFlights()
   }
@@ -32,14 +34,11 @@ class MainActivity : AppCompatActivity(), View {
   }
 
   override fun showProgress() {
-    progressBar = ProgressBar(this).apply {
-      this.isIndeterminate = true
-      this.visibility = android.view.View.VISIBLE
-    }
+    progressBar.visibility = android.view.View.VISIBLE
   }
 
   override fun hideProgress() {
-    progressBar
+    progressBar.visibility = android.view.View.INVISIBLE
   }
 
   override fun showListOfFlights(flightsList: List<Flight>) {

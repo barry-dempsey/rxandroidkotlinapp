@@ -39,8 +39,10 @@ class MainPresenterTest {
   fun `get list of flights from server`() {
     doReturn(Observable.just(provideMockListOfFlights())).`when`(remoteDao).retrieveListOfFlights()
     presenter.getListOfFlights()
+    verify(view).showProgress()
     testScheduler.triggerActions()
     verify(view).showListOfFlights(provideMockListOfFlights())
+    verify(view).hideProgress()
   }
 
   @Test

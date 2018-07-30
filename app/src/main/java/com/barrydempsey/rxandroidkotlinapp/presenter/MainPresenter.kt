@@ -26,6 +26,9 @@ class MainPresenter(private val remoteDao: MainRemoteDao,
             { flights -> view.showListOfFlights(flights) },
             { error -> view.showError(error) }
         )
+
+    view.hideProgress()
+
   }
 
   private fun validateThis(flights: ArrayList<Flight>?) {
