@@ -29,14 +29,14 @@ class MainPresenterTest {
   @Mock private lateinit var view: View
 
   @Before
-  fun setUp() {
+  fun `set up`() {
     MockitoAnnotations.initMocks(this)
     testScheduler = TestScheduler()
     presenter = MainPresenter(remoteDao, view, testScheduler, testScheduler)
   }
 
   @Test
-  fun getListOfFlights() {
+  fun `get list of flights from server`() {
     doReturn(Observable.just(provideMockListOfFlights())).`when`(remoteDao).retrieveListOfFlights()
     presenter.getListOfFlights()
     testScheduler.triggerActions()
@@ -44,7 +44,7 @@ class MainPresenterTest {
   }
 
   @Test
-  fun filterFlightsByNumber() {
+  fun `test the filter for flight number`() {
     val flightNumberToCheck = "1"
     doReturn(Observable.just(provideMockListOfFlights())).`when`(remoteDao).retrieveListOfFlights()
     val flights = presenter.filterFlightsByNumber(flightNumberToCheck)
