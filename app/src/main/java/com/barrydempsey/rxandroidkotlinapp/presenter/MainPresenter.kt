@@ -16,7 +16,8 @@ class MainPresenter(private val remoteDao: MainRemoteDao,
                     private val androidSchedulers: Scheduler)
   : ActionListener {
 
-  override fun getListOfFlights(numberOfResults: Int) {
+  override fun getListOfFlights() {
+    view.showProgress()
     remoteDao.retrieveListOfFlights()
         .subscribeOn(processSchedulers)
         .observeOn(androidSchedulers)

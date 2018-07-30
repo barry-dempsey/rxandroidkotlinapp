@@ -1,6 +1,5 @@
 package com.barrydempsey.rxandroidkotlinapp.view
 
-import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity(), View {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_main)
     presenter = MainPresenter.newInstance(this)
-    presenter.getListOfFlights(12)
+    presenter.getListOfFlights()
   }
 
   private fun updateListView(flightList: List<Flight>) {
@@ -35,11 +34,12 @@ class MainActivity : AppCompatActivity(), View {
   override fun showProgress() {
     progressBar = ProgressBar(this).apply {
       this.isIndeterminate = true
+      this.visibility = android.view.View.VISIBLE
     }
   }
 
   override fun hideProgress() {
-
+    progressBar
   }
 
   override fun showListOfFlights(flightsList: List<Flight>) {

@@ -19,7 +19,7 @@ interface MainContract {
 
   interface ActionListener {
 
-    fun getListOfFlights(numberOfResults: Int)
+    fun getListOfFlights()
 
     fun filterFlightsByNumber(flightNumber: String): Observable<List<Flight>>
 
