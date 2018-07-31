@@ -23,6 +23,8 @@ interface MainContract {
 
     fun filterFlightsByNumber(flightNumber: String): Observable<List<Flight>>
 
+    fun onViewDestroyed()
+
   }
 
 }

@@ -8,6 +8,7 @@ import com.barrydempsey.rxandroidkotlinapp.presenter.MainContract.View
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class MainPresenter(private val remoteDao: MainRemoteDao,
@@ -16,19 +17,19 @@ class MainPresenter(private val remoteDao: MainRemoteDao,
                     private val androidSchedulers: Scheduler)
   : ActionListener {
 
+  private var subscription: Disposable? = null
+
   override fun getListOfFlights() {
     view.showProgress()
-    remoteDao.retrieveListOfFlights()
+    subscription = remoteDao.retrieveListOfFlights()
         .subscribeOn(processSchedulers)
         .observeOn(androidSchedulers)
         .doOnNext(this::validateThis)
+        .doOnTerminate{ view.hideProgress()}
         .subscribe(
             { flights -> view.showListOfFlights(flights) },
             { error -> view.showError(error) }
         )
-
-    view.hideProgress()
-
   }
 
   private fun validateThis(flights: ArrayList<Flight>?) {
@@ -38,6 +39,10 @@ class MainPresenter(private val remoteDao: MainRemoteDao,
   override fun filterFlightsByNumber(flightNumber: String): Observable<List<Flight>> {
     return remoteDao.retrieveListOfFlights()
         .map{ it -> it.filter { it.flightNumber.equals(flightNumber, true) } }
+  }
+
+  override fun onViewDestroyed() {
+    subscription?.dispose()
   }
 
   companion object {
