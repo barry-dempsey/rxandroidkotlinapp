@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.barrydempsey.rxandroidkotlinapp.Flight
+import com.barrydempsey.rxandroidkotlinapp.model.Flight
 import com.barrydempsey.rxandroidkotlinapp.R.id
 import com.barrydempsey.rxandroidkotlinapp.R.layout
 

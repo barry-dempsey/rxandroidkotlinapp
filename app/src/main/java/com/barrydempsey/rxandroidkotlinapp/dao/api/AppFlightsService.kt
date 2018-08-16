@@ -2,7 +2,7 @@ package com.barrydempsey.rxandroidkotlinapp.dao.api
 
 import android.content.Context
 import com.barrydempsey.rxandroidkotlinapp.App
-import com.barrydempsey.rxandroidkotlinapp.Flight
+import com.barrydempsey.rxandroidkotlinapp.model.Flight
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Inject

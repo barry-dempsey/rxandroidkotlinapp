@@ -3,7 +3,7 @@ package com.barrydempsey.rxandroidkotlinapp.presenter
 import android.content.Context
 import com.barrydempsey.rxandroidkotlinapp.base.BasePresenter
 import com.barrydempsey.rxandroidkotlinapp.dao.AppMainRemoteDao
-import com.barrydempsey.rxandroidkotlinapp.Flight
+import com.barrydempsey.rxandroidkotlinapp.model.Flight
 import com.barrydempsey.rxandroidkotlinapp.dao.MainRemoteDao
 import com.barrydempsey.rxandroidkotlinapp.presenter.MainContract.ActionListener
 import com.barrydempsey.rxandroidkotlinapp.presenter.MainContract.View

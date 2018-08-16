@@ -1,4 +1,4 @@
-package com.barrydempsey.rxandroidkotlinapp
+package com.barrydempsey.rxandroidkotlinapp.model
 
 import java.io.Serializable
 

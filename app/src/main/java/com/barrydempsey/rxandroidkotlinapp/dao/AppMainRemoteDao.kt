@@ -2,7 +2,7 @@ package com.barrydempsey.rxandroidkotlinapp.dao
 
 import android.content.Context
 import com.barrydempsey.rxandroidkotlinapp.dao.api.AppFlightsService
-import com.barrydempsey.rxandroidkotlinapp.Flight
+import com.barrydempsey.rxandroidkotlinapp.model.Flight
 import com.barrydempsey.rxandroidkotlinapp.dao.api.FlightsService
 import io.reactivex.Observable
 

@@ -1,10 +1,8 @@
 package com.barrydempsey.rxandroidkotlinapp.presenter
 
-import com.barrydempsey.rxandroidkotlinapp.Flight
-import com.barrydempsey.rxandroidkotlinapp.base.BaseActivity
+import com.barrydempsey.rxandroidkotlinapp.model.Flight
 import com.barrydempsey.rxandroidkotlinapp.dao.AppMainRemoteDao
 import com.barrydempsey.rxandroidkotlinapp.presenter.MainContract.View
-import com.barrydempsey.rxandroidkotlinapp.view.MainActivity
 import io.reactivex.Observable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Assert.assertEquals
@@ -14,7 +12,6 @@ import org.junit.Test
 
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
@@ -60,10 +57,10 @@ class MainPresenterTest {
   private fun provideMockListOfFlights(): List<Flight> {
     return arrayListOf<Flight>().apply {
       this.add(Flight("1",
-                      "Aer Lingus",
-                      "18 May 2018",
-                      "19 May 2018",
-                      123.45))
+          "Aer Lingus",
+          "18 May 2018",
+          "19 May 2018",
+          123.45))
     }
   }
 }
