@@ -1,11 +1,12 @@
 package com.barrydempsey.rxandroidkotlinapp.view
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.barrydempsey.rxandroidkotlinapp.base.BaseActivity
 import com.barrydempsey.rxandroidkotlinapp.Flight
 import com.barrydempsey.rxandroidkotlinapp.presenter.MainContract.View
 import com.barrydempsey.rxandroidkotlinapp.presenter.MainPresenter
@@ -13,17 +14,22 @@ import com.barrydempsey.rxandroidkotlinapp.R.layout
 import kotlinx.android.synthetic.main.activity_main.progress_bar
 import kotlinx.android.synthetic.main.activity_main.recycler_view
 
-class MainActivity : AppCompatActivity(), View {
+class MainActivity : BaseActivity<MainPresenter>(), View {
 
-  private lateinit var presenter: MainPresenter
   private lateinit var progressBar: ProgressBar
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_main)
     progressBar = progress_bar
-    presenter = MainPresenter.newInstance(this)
-    presenter.getListOfFlights()
+
+    fetchFlights()
+  }
+
+  private fun fetchFlights() {
+    isConnectedOrConnecting {
+      presenter.getListOfFlights()
+    }
   }
 
   private fun updateListView(flightList: List<Flight>) {
@@ -47,6 +53,10 @@ class MainActivity : AppCompatActivity(), View {
 
   override fun showError(error: Throwable) {
     Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show()
+  }
+
+  override fun instantiatePresenter(): MainPresenter {
+    return MainPresenter.newInstance(this, this)
   }
 
   override fun onDestroy() {

@@ -1,5 +1,7 @@
 package com.barrydempsey.rxandroidkotlinapp.presenter
 
+import android.content.Context
+import com.barrydempsey.rxandroidkotlinapp.base.BasePresenter
 import com.barrydempsey.rxandroidkotlinapp.dao.AppMainRemoteDao
 import com.barrydempsey.rxandroidkotlinapp.Flight
 import com.barrydempsey.rxandroidkotlinapp.dao.MainRemoteDao
@@ -15,17 +17,19 @@ class MainPresenter(private val remoteDao: MainRemoteDao,
                     private val view: View,
                     private val processSchedulers: Scheduler,
                     private val androidSchedulers: Scheduler)
-  : ActionListener {
+  : BasePresenter(), ActionListener {
+
+  override fun onViewCreated() {}
 
   private var subscription: Disposable? = null
 
   override fun getListOfFlights() {
-    view.showProgress()
     subscription = remoteDao.retrieveListOfFlights()
         .subscribeOn(processSchedulers)
+        .doOnSubscribe { view.showProgress() }
         .observeOn(androidSchedulers)
         .doOnNext(this::validateThis)
-        .doOnTerminate{ view.hideProgress()}
+        .doOnTerminate{ view.hideProgress() }
         .subscribe(
             { flights -> view.showListOfFlights(flights) },
             { error -> view.showError(error) }
@@ -48,8 +52,9 @@ class MainPresenter(private val remoteDao: MainRemoteDao,
   companion object {
 
     @JvmStatic
-    fun newInstance(view: MainContract.View): MainPresenter =
-        MainPresenter(AppMainRemoteDao.newInstance(),
+    fun newInstance(view: MainContract.View,
+                    context: Context): MainPresenter =
+        MainPresenter(AppMainRemoteDao.newInstance(context),
                       view,
                       Schedulers.io(),
                       AndroidSchedulers.mainThread())
